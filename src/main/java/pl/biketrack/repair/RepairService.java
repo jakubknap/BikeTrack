@@ -16,4 +16,6 @@ public interface RepairService {
     RepairDetailsResponse getRepairDetails(UUID repairUuid);
 
     Page<RepairListResponse> getAllRepairs(Pageable pageable);
+
+    StatsResponse getStats();
 }

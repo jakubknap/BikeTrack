@@ -61,4 +61,10 @@ public class RepairController {
         log.info("Get all user repairs");
         return repairService.getAllRepairs(pageable);
     }
+
+    @GetMapping("/stats")
+    public StatsResponse getStats() {
+        log.info("Get user repair stats");
+        return repairService.getStats();
+    }
 }

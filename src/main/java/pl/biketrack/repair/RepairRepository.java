@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,4 +29,11 @@ public interface RepairRepository extends JpaRepository<Repair, Long> {
             WHERE b.uuid = :bikeUuid
             """)
     List<RepairDetailsResponse> findAllRepairsByBikeUuid(UUID bikeUuid);
+
+    @Query("""
+            SELECT r.price
+            FROM Repair r
+            WHERE r.userUuid = :userUuid
+            """)
+    List<BigDecimal> findAllRepairCostsByUserUuid(UUID userUuid);
 }

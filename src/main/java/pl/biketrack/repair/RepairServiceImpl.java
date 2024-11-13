@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import pl.biketrack.bike.Bike;
 import pl.biketrack.bike.BikeRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 import java.util.UUID;
 
 import static pl.biketrack.security.SecurityUtils.getLoggedUser;
@@ -103,6 +106,18 @@ public class RepairServiceImpl implements RepairService {
         }
 
         return repairRepository.findAllByUserUuid(getLoggedUserUUID(), pageable);
+    }
+
+    @Override
+    public StatsResponse getStats() {
+        List<BigDecimal> allRepairCostsByUserUuid = repairRepository.findAllRepairCostsByUserUuid(getLoggedUserUUID());
+
+        int totalRepairs = allRepairCostsByUserUuid.size();
+        BigDecimal totalCostsOfRepairs = allRepairCostsByUserUuid.stream()
+                                                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal averageCostsOfRepair = totalCostsOfRepairs.divide(BigDecimal.valueOf(totalRepairs), RoundingMode.HALF_UP);
+
+        return new StatsResponse(totalRepairs, totalCostsOfRepairs, averageCostsOfRepair);
     }
 
     private Bike findBike(UUID bikeUuid) {

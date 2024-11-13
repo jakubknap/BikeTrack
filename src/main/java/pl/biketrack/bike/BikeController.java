@@ -56,6 +56,12 @@ public class BikeController {
         return bikeService.getBikeDetails(uuid);
     }
 
+    @GetMapping("/{uuid}/extended")
+    public BikeDetailsExtendedResponse getBikeDetailsExtended(@PathVariable UUID uuid) {
+        log.info("Get bike details with repairs for bike with uuid: {}", uuid);
+        return bikeService.getBikeDetailsExtended(uuid);
+    }
+
     @GetMapping("/search")
     public Page<BikeListResponse> getAllBikes(@PageableDefault(size = 2, sort = "createdDate", direction = DESC) Pageable pageable) {
         log.info("Get all user bikes");

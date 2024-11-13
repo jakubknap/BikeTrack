@@ -92,7 +92,8 @@ public class RepairServiceImpl implements RepairService {
                                          repair.getPrice(),
                                          repair.getCreatedDate(),
                                          repair.getBike()
-                                               .getUuid());
+                                               .getUuid(),
+                                         repair.getUuid());
     }
 
     @Override

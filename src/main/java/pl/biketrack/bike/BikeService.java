@@ -15,5 +15,7 @@ public interface BikeService {
 
     BikeDetailsResponse getBikeDetails(UUID bikeUuid);
 
+    BikeDetailsExtendedResponse getBikeDetailsExtended(UUID bikeUuid);
+
     Page<BikeListResponse> getAllBikes(Pageable pageable);
 }

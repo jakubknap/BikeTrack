@@ -1,0 +1,28 @@
+services:
+  postgres:
+    container_name: postgres-bikeTrack
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: bikeTrack
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - bikeTrack
+    restart: unless-stopped
+  mail-dev:
+    container_name: mail-dev-bikeTrack
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+networks:
+  bikeTrack:
+    driver: bridge
+volumes:
+  postgres:
+    driver: local

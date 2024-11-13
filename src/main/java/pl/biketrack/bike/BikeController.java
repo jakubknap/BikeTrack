@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import pl.biketrack.repair.RepairDetailsResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -66,5 +68,11 @@ public class BikeController {
     public Page<BikeListResponse> getAllBikes(@PageableDefault(size = 2, sort = "createdDate", direction = DESC) Pageable pageable) {
         log.info("Get all user bikes");
         return bikeService.getAllBikes(pageable);
+    }
+
+    @GetMapping("/{uuid}/repairs")
+    public List<RepairDetailsResponse> getBikeRepairs(@PathVariable UUID uuid) {
+        log.info("Get bike repairs for bike with uuid: {}", uuid);
+        return bikeService.getBikeRepairs(uuid);
     }
 }

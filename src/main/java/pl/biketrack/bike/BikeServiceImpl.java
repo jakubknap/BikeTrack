@@ -120,6 +120,24 @@ public class BikeServiceImpl implements BikeService {
         return bikeRepository.findAllByUserUuid(getLoggedUserUUID(), pageable);
     }
 
+    @Override
+    public List<RepairDetailsResponse> getBikeRepairs(UUID bikeUuid) {
+        Bike bike = findBike(bikeUuid);
+        UUID loggedUserUUID = getLoggedUserUUID();
+
+        if (!bike.getUser()
+                 .getUuid()
+                 .equals(loggedUserUUID)) {
+            log.error("User is not authorized to view repairs of this bike. User: {}, Bike Owner: {}",
+                      loggedUserUUID,
+                      bike.getUser()
+                          .getUuid());
+            throw new RuntimeException("Nie jesteś upoważniony do podglądu napraw tego roweru");
+        }
+
+        return repairRepository.findAllRepairsByBikeUuid(bikeUuid);
+    }
+
     private Bike buildBike(AddBikeRequest request, User user) {
         return Bike.builder()
                    .name(request.name())

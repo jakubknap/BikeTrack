@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record AddBikeRequest(
         @NotNull(message = "Nazwa jest wymagana")
-        @NotEmpty(message = "Nazwa jest wymagana")
+        @NotEmpty(message = "Nazwa nie może być pusta")
         String name,
 
         @NotNull(message = "Marka jest wymagana")

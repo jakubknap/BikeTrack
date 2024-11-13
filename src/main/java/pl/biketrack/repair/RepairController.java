@@ -1,4 +1,4 @@
-package pl.biketrack.bike;
+package pl.biketrack.repair;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -24,41 +24,41 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @Slf4j
 @RestController
-@RequestMapping("/bike")
+@RequestMapping("/repair")
 @RequiredArgsConstructor
-@Tag(name = "Bike")
-public class BikeController {
+@Tag(name = "Repair")
+public class RepairController {
 
-    private final BikeService bikeService;
+    private final RepairService repairService;
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public void addBike(@RequestBody @Valid AddBikeRequest request) {
-        log.info("Add bike request: {}", request);
-        bikeService.addBike(request);
+    public void addRepair(@RequestBody @Valid AddRepairRequest request) {
+        log.info("Add repair request: {}", request);
+        repairService.addRepair(request);
     }
 
     @PutMapping
-    public void editBike(@RequestBody @Valid EditBikeRequest request) {
-        log.info("Edit bike request: {}", request);
-        bikeService.editBike(request);
+    public void editRepair(@RequestBody @Valid EditRepairRequest request) {
+        log.info("Edit repair request: {}", request);
+        repairService.editRepair(request);
     }
 
     @DeleteMapping("/{uuid}")
-    public void deleteBike(@PathVariable UUID uuid) {
-        log.info("Delete bike with uuid: {}", uuid);
-        bikeService.deleteBike(uuid);
+    public void deleteRepair(@PathVariable UUID uuid) {
+        log.info("Delete repair with uuid: {}", uuid);
+        repairService.deleteRepair(uuid);
     }
 
     @GetMapping("/{uuid}")
-    public BikeDetailsResponse getBikeDetails(@PathVariable UUID uuid) {
-        log.info("Get bike details with uuid: {}", uuid);
-        return bikeService.getBikeDetails(uuid);
+    public RepairDetailsResponse getRepairDetails(@PathVariable UUID uuid) {
+        log.info("Get repair details with uuid: {}", uuid);
+        return repairService.getRepairDetails(uuid);
     }
 
     @GetMapping("/search")
-    public Page<BikeListResponse> getAllBikes(@PageableDefault(size = 2, sort = "createdDate", direction = DESC) Pageable pageable) {
-        log.info("Get all user bikes");
-        return bikeService.getAllBikes(pageable);
+    public Page<RepairListResponse> getAllRepairs(@PageableDefault(size = 2, sort = "createdDate", direction = DESC) Pageable pageable) {
+        log.info("Get all user repairs");
+        return repairService.getAllRepairs(pageable);
     }
 }

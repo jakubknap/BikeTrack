@@ -11,7 +11,7 @@ public record EditBikeRequest(
         UUID bikeUuid,
 
         @NotNull(message = "Nazwa jest wymagana")
-        @NotEmpty(message = "Nazwa jest wymagana")
+        @NotEmpty(message = "Nazwa nie może być pusta")
         String name,
 
         @NotNull(message = "Marka jest wymagana")

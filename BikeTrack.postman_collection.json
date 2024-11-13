@@ -1,0 +1,532 @@
+{
+	"info": {
+		"_postman_id": "b1c569e3-2d38-4aa9-a49e-ac4708ead388",
+		"name": "BikeTrack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30369165"
+	},
+	"item": [
+		{
+			"name": "Autentykacja",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nick\": \"Pseudo\",\r\n    \"email\": \"jakub@biketrack.pl\",\r\n    \"password\": \"password1@3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8088/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/auth/activate-account?token=987751",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"auth",
+								"activate-account"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "987751"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set('token', pm.response.json().token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"jakub@biketrack.pl\",\r\n    \"password\": \"password1@3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8088/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bike",
+			"item": [
+				{
+					"name": "Add Bike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mój rower\",\r\n    \"brand\": \"Dartmoor\",\r\n    \"model\": \"Primal\",\r\n    \"type\": \"MTB\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8088/bike",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"bike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Bike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bikeUuid\": \"5ac9afbc-9521-42d3-a6a0-b6fd5af738eb\",\r\n    \"name\": \"Mój rower\",\r\n    \"brand\": \"Dartmoor\",\r\n    \"model\": \"Primal\",\r\n    \"type\": \"MTB\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8088/bike",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"bike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/bike/5ac9afbc-9521-42d3-a6a0-b6fd5af738eb",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"bike",
+								"5ac9afbc-9521-42d3-a6a0-b6fd5af738eb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bike Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/bike/568e405e-7985-4205-9553-44afed0c836f",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"bike",
+								"568e405e-7985-4205-9553-44afed0c836f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bike Details with repairs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/bike/00570b2f-6146-4f74-bb81-d07638d2a502/extended",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"bike",
+								"00570b2f-6146-4f74-bb81-d07638d2a502",
+								"extended"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bike repairs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/bike/00570b2f-6146-4f74-bb81-d07638d2a502/repairs",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"bike",
+								"00570b2f-6146-4f74-bb81-d07638d2a502",
+								"repairs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bike List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/bike/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"bike",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Repair",
+			"item": [
+				{
+					"name": "Add Repair",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bikeUuid\": \"00570b2f-6146-4f74-bb81-d07638d2a502\",\r\n    \"title\": \"Moja naprawa\",\r\n    \"description\": \"Mój dodatkowy opis naprawy\",\r\n    \"price\": \"12.10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8088/repair",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"repair"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Repair",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"repairUuid\": \"ba68cdc6-a46c-45b5-9fb0-d4339b4b59a7\",\r\n    \"title\": \"Mój rower\",\r\n    \"description\": \"Dartmoor\",\r\n    \"price\": \"10.45\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8088/repair",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"repair"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repair",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/repair/ba68cdc6-a46c-45b5-9fb0-d4339b4b59a7",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"repair",
+								"ba68cdc6-a46c-45b5-9fb0-d4339b4b59a7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repair List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/client/repair/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"client",
+								"repair",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/repair/stats",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"repair",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repair Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8088/client/repair/006884f6-e12f-41d9-b18c-a663e5ead009",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"client",
+								"repair",
+								"006884f6-e12f-41d9-b18c-a663e5ead009"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -46,7 +46,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private UUID uuid;
 
-    private String firstname;
+    private String nick;
 
     @Column(unique = true)
     private String email;

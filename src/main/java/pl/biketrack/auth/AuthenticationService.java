@@ -79,7 +79,7 @@ public class AuthenticationService {
                                       .orElseThrow(() -> new RuntimeException("Nie znaleziono roli 'Użytkownik'"));
 
         return User.builder()
-                   .firstname(request.getFirstname())
+                   .nick(request.getNick())
                    .email(request.getEmail())
                    .password(passwordEncoder.encode(request.getPassword()))
                    .accountLocked(false)
@@ -90,7 +90,7 @@ public class AuthenticationService {
 
     private void sendValidationEmail(User user) {
         String newToken = generateAndSaveActivationToken(user);
-        emailService.sendEmail(user.getEmail(), user.getFirstname(), ACTIVATE_ACCOUNT, activationUrl, newToken, "Aktywacja konta");
+        emailService.sendEmail(user.getEmail(), user.getNick(), ACTIVATE_ACCOUNT, activationUrl, newToken, "Aktywacja konta");
     }
 
     private String generateAndSaveActivationToken(User user) {

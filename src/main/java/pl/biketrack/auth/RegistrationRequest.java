@@ -11,9 +11,9 @@ import lombok.Setter;
 @Setter
 public class RegistrationRequest {
 
-    @NotEmpty(message = "Imię jest wymagane")
-    @NotBlank(message = "Imię jest wymagane")
-    private String firstname;
+    @NotEmpty(message = "Nick jest wymagany")
+    @NotBlank(message = "Nick jest wymagany")
+    private String nick;
 
     @Email(message = "Format e-maila jest niepoprawny")
     @NotEmpty(message = "Email jest wymagany")

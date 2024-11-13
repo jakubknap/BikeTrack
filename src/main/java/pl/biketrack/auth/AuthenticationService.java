@@ -1,5 +1,7 @@
 package pl.biketrack.auth;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -70,13 +72,13 @@ public class AuthenticationService {
     private void validationOfExistingUser(RegistrationRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             log.error("User with e-mail {} already exists", request.getEmail());
-            throw new RuntimeException("Użytkownik o takim adresie e-mail już istnieje");
+            throw new EntityExistsException("Użytkownik o takim adresie e-mail już istnieje");
         }
     }
 
     private User buildUser(RegistrationRequest request) {
         Role userRole = roleRepository.findByName(ROLE_USER)
-                                      .orElseThrow(() -> new RuntimeException("Nie znaleziono roli 'Użytkownik'"));
+                                      .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono roli 'Użytkownik'"));
 
         return User.builder()
                    .nick(request.getNick())
@@ -145,7 +147,7 @@ public class AuthenticationService {
         Token savedToken = tokenRepository.findByToken(token)
                                           .orElseThrow(() -> {
                                               log.error("Token: {} not found", token);
-                                              throw new RuntimeException("Nie znaleziono tokenu");
+                                              throw new EntityNotFoundException("Nie znaleziono tokenu");
                                           });
 
         if (nonNull(savedToken.getValidatedAt())) {
@@ -162,7 +164,7 @@ public class AuthenticationService {
 
         User user = userRepository.findByEmail(savedToken.getUser()
                                                          .getEmail())
-                                  .orElseThrow(() -> new RuntimeException("Nie znaleziono użytkownika"));
+                                  .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono użytkownika"));
         user.setEnabled(true);
         userRepository.save(user);
 
